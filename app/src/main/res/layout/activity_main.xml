@@ -78,7 +78,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="0dp"
-                    app:hintTextAppearance="@style/TextLabel"
+                    app:hintTextAppearance="@style/HintStyle"
                     app:layout_constraintLeft_toRightOf="@+id/line_spacing_text_input_layout"
                     app:layout_constraintRight_toRightOf="@+id/font_spinner"
                     app:layout_constraintTop_toTopOf="@+id/line_spacing_text_input_layout">
@@ -100,7 +100,7 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="24dp"
-                    app:hintTextAppearance="@style/TextLabel"
+                    app:hintTextAppearance="@style/HintStyle"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintLeft_toLeftOf="@+id/font_spinner"
                     app:layout_constraintRight_toLeftOf="@+id/line_spacing_text_input_layout"
@@ -126,7 +126,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="0dp"
-                    app:hintTextAppearance="@style/TextLabel"
+                    app:hintTextAppearance="@style/HintStyle"
                     app:layout_constraintLeft_toRightOf="@+id/font_size_TextInputLayout"
                     app:layout_constraintRight_toLeftOf="@+id/letter_spacing_text_input_layout"
                     app:layout_constraintTop_toTopOf="@+id/font_size_TextInputLayout">
@@ -135,7 +135,7 @@
                         android:id="@+id/line_spacing_editText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/line_spacing"
+                        android:hint="@string/line_spacing_extra"
                         android:inputType="numberSigned|numberDecimal"
                         android:textColor="#008ECC"
                         android:textSize="24sp"/>
@@ -152,7 +152,7 @@
             android:layout_gravity="end|bottom"
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="24dp"
-            android:src="@drawable/ic_share_white_24dp"
+            android:src="@drawable/ic_share"
             android:tint="#FFFFFF"
             android:tintMode="src_in"/>
 
