@@ -44,6 +44,7 @@ public class TypesetterActivity extends AppCompatActivity {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
     if (savedInstanceState == null) {
+      // This will set the text size to (DEFAULT_TEXT_SIZE)sp
       binding.fillerTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, DEFAULT_TEXT_SIZE);
     }
 
@@ -65,81 +66,15 @@ public class TypesetterActivity extends AppCompatActivity {
     renderValues();
   }
 
-  private void initializeEditTextValues() {
-    initializeTextSize();
-    initializeLetterSpacing();
-    initializeLineSpacing();
-  }
-
-  private void initializeTextSize() {
-    float textSize = binding.fillerTextView.getTextSize();
-    textSize = textSize / getResources().getDisplayMetrics().scaledDensity;
-    binding.fontSizeEditText.setText(Utils.formatFloatToDisplay(textSize));
-  }
-
-  private void initializeLetterSpacing() {
-    if (Utils.IS_LOLLIPOP_AND_ABOVE) {
-      binding.letterSpacingTextInputLayout.setEnabled(true);
-      binding.letterSpacingEditText.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
-      float letterSpacing = binding.fillerTextView.getLetterSpacing();
-      if (letterSpacing == 0) {
-        binding.letterSpacingEditText.setText("0.00");
-      } else {
-        binding.letterSpacingEditText.setText(Utils.formatFloatToDisplay(letterSpacing));
-      }
-    } else {
-      binding.letterSpacingTextInputLayout.setEnabled(false);
-      binding.letterSpacingEditText.setTextColor(ContextCompat.getColor(this, R.color.light_grey));
-    }
-  }
-
-  private void initializeLineSpacing() {
-    float lineSpacing = binding.fillerTextView.getLineSpacingExtra();
-    lineSpacing = lineSpacing / getResources().getDisplayMetrics().scaledDensity;
-    binding.lineSpacingEditText.setText(Utils.formatFloatToDisplay(lineSpacing));
-  }
-
   private void renderValues() {
     applyTextSize();
-    if (Utils.IS_LOLLIPOP_AND_ABOVE) {
-      applyLetterSpacing();
-    }
+    applyLetterSpacing();
     applyLineSpacing();
   }
 
-  private void applyTextSize() {
-    String size = binding.fontSizeEditText.getText().toString();
-    float sizeSp = Float.parseFloat(size);
-    binding.fillerTextView.setTextSize(sizeSp);
-  }
-
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  private void applyLetterSpacing() {
-    String letterSpacing = binding.letterSpacingEditText.getText().toString();
-    try {
-      float letterEms = Float.parseFloat(letterSpacing);
-      binding.fillerTextView.setLetterSpacing(letterEms);
-//      binding.letterSpacingTextInputLayout.setErrorEnabled(false);
-    } catch (NumberFormatException e) {
-      Log.e(TAG, "Unable to format letter spacing");
-//      binding.letterSpacingTextInputLayout.setErrorEnabled(true);
-//      binding.letterSpacingTextInputLayout.setError(getString(R.string.nah));
-    }
-  }
-
-  private void applyLineSpacing() {
-    String lineSpacing = binding.lineSpacingEditText.getText().toString();
-    try {
-      float lineSpacingSp = Float.parseFloat(lineSpacing);
-      float lineSpacingPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, lineSpacingSp, getResources().getDisplayMetrics());
-      float multiplier = binding.fillerTextView.getLineSpacingMultiplier();
-      binding.fillerTextView.setLineSpacing(lineSpacingPx, multiplier);
-//      binding.lineSpacingTextInputLayout.setErrorEnabled(false);
-    } catch (NumberFormatException e) {
-      Log.e(TAG, "Unable to format line spacing");
-//      binding.lineSpacingTextInputLayout.setErrorEnabled(true);
-//      binding.lineSpacingTextInputLayout.setError(getString(R.string.nah));
-    }
+  private void clearInputFocus() {
+    Utils.hideKeyboard(this);
+    binding.containerLayout.requestFocus();
   }
 
   private void shareScreenshot() {
@@ -166,9 +101,67 @@ public class TypesetterActivity extends AppCompatActivity {
     startActivity(intent);
   }
 
-  private void clearInputFocus() {
-    Utils.hideKeyboard(this);
-    binding.coord.requestFocus();
+  private void initializeEditTextValues() {
+    initializeTextSize();
+    initializeLetterSpacing();
+    initializeLineSpacing();
+  }
+
+  private void initializeTextSize() {
+    float textSize = binding.fillerTextView.getTextSize();
+    textSize = textSize / getResources().getDisplayMetrics().scaledDensity;
+    binding.fontSizeEditText.setText(Utils.formatFloatToDisplay(textSize));
+  }
+
+  private void initializeLetterSpacing() {
+    binding.letterSpacingTextInputLayout.setEnabled(true);
+    binding.letterSpacingEditText.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+    float letterSpacing = binding.fillerTextView.getLetterSpacing();
+    if (letterSpacing == 0) {
+      binding.letterSpacingEditText.setText("0.00");
+    } else {
+      binding.letterSpacingEditText.setText(Utils.formatFloatToDisplay(letterSpacing));
+    }
+  }
+
+  private void initializeLineSpacing() {
+    float lineSpacing = binding.fillerTextView.getLineSpacingExtra();
+    lineSpacing = lineSpacing / getResources().getDisplayMetrics().scaledDensity;
+    binding.lineSpacingEditText.setText(Utils.formatFloatToDisplay(lineSpacing));
+  }
+
+  private void applyTextSize() {
+    String size = binding.fontSizeEditText.getText().toString();
+    float sizeSp = Float.parseFloat(size);
+    binding.fillerTextView.setTextSize(sizeSp);
+  }
+
+  private void applyLetterSpacing() {
+    String letterSpacing = binding.letterSpacingEditText.getText().toString();
+    try {
+      float letterEms = Float.parseFloat(letterSpacing);
+      binding.fillerTextView.setLetterSpacing(letterEms);
+//      binding.letterSpacingTextInputLayout.setErrorEnabled(false);
+    } catch (NumberFormatException e) {
+      Log.e(TAG, "Unable to format letter spacing");
+//      binding.letterSpacingTextInputLayout.setErrorEnabled(true);
+//      binding.letterSpacingTextInputLayout.setError(getString(R.string.nah));
+    }
+  }
+
+  private void applyLineSpacing() {
+    String lineSpacing = binding.lineSpacingEditText.getText().toString();
+    try {
+      float lineSpacingSp = Float.parseFloat(lineSpacing);
+      float lineSpacingPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, lineSpacingSp, getResources().getDisplayMetrics());
+      float multiplier = binding.fillerTextView.getLineSpacingMultiplier();
+      binding.fillerTextView.setLineSpacing(lineSpacingPx, multiplier);
+//      binding.lineSpacingTextInputLayout.setErrorEnabled(false);
+    } catch (NumberFormatException e) {
+      Log.e(TAG, "Unable to format line spacing");
+//      binding.lineSpacingTextInputLayout.setErrorEnabled(true);
+//      binding.lineSpacingTextInputLayout.setError(getString(R.string.nah));
+    }
   }
 
   private AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {

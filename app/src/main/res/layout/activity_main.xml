@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coord"
+        android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
@@ -114,8 +114,7 @@
                         android:hint="@string/font_size"
                         android:inputType="numberDecimal"
                         android:digits="0123456789."
-                        android:textColor="#008ECC"
-                        android:textSize="@dimen/default_font_size"/>
+                        android:textColor="#008ECC"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -137,8 +136,7 @@
                         android:layout_height="match_parent"
                         android:hint="@string/line_spacing_extra"
                         android:inputType="numberSigned|numberDecimal"
-                        android:textColor="#008ECC"
-                        android:textSize="24sp"/>
+                        android:textColor="#008ECC"/>
 
                 </android.support.design.widget.TextInputLayout>
 
