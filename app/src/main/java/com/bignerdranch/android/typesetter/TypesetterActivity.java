@@ -30,9 +30,6 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
-import static com.bignerdranch.android.typesetter.AndroidUtils.IS_LOLLIPOP_AND_ABOVE;
-import static com.bignerdranch.android.typesetter.AndroidUtils.formatFloat;
-
 public class TypesetterActivity extends AppCompatActivity {
 
   private static final String TAG = "TypesetterActivity";
@@ -77,18 +74,18 @@ public class TypesetterActivity extends AppCompatActivity {
   private void initializeTextSize() {
     float textSize = binding.fillerTextView.getTextSize();
     textSize = textSize / getResources().getDisplayMetrics().scaledDensity;
-    binding.fontSizeEditText.setText(formatFloat(textSize));
+    binding.fontSizeEditText.setText(Utils.formatFloatToDisplay(textSize));
   }
 
   private void initializeLetterSpacing() {
-    if (IS_LOLLIPOP_AND_ABOVE) {
+    if (Utils.IS_LOLLIPOP_AND_ABOVE) {
       binding.letterSpacingTextInputLayout.setEnabled(true);
       binding.letterSpacingEditText.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
       float letterSpacing = binding.fillerTextView.getLetterSpacing();
       if (letterSpacing == 0) {
         binding.letterSpacingEditText.setText("0.00");
       } else {
-        binding.letterSpacingEditText.setText(formatFloat(letterSpacing));
+        binding.letterSpacingEditText.setText(Utils.formatFloatToDisplay(letterSpacing));
       }
     } else {
       binding.letterSpacingTextInputLayout.setEnabled(false);
@@ -99,12 +96,12 @@ public class TypesetterActivity extends AppCompatActivity {
   private void initializeLineSpacing() {
     float lineSpacing = binding.fillerTextView.getLineSpacingExtra();
     lineSpacing = lineSpacing / getResources().getDisplayMetrics().scaledDensity;
-    binding.lineSpacingEditText.setText(formatFloat(lineSpacing));
+    binding.lineSpacingEditText.setText(Utils.formatFloatToDisplay(lineSpacing));
   }
 
   private void renderValues() {
     applyTextSize();
-    if (IS_LOLLIPOP_AND_ABOVE) {
+    if (Utils.IS_LOLLIPOP_AND_ABOVE) {
       applyLetterSpacing();
     }
     applyLineSpacing();
@@ -146,7 +143,7 @@ public class TypesetterActivity extends AppCompatActivity {
   }
 
   private void shareScreenshot() {
-    Bitmap bitmap = BitmapUtils.getBitmapFromView(binding.constraint);
+    Bitmap bitmap = Utils.getBitmapFromView(binding.constraint);
     File dir = getFilesDir();
     File file = new File(dir, "font-screenshot.png");
     try {
@@ -170,7 +167,7 @@ public class TypesetterActivity extends AppCompatActivity {
   }
 
   private void clearInputFocus() {
-    AndroidUtils.hideKeyboard(this);
+    Utils.hideKeyboard(this);
     binding.coord.requestFocus();
   }
 

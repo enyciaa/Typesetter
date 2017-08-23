@@ -10,6 +10,29 @@ import java.util.List;
 
 class Font {
 
+    private String fileName;
+
+    private String displayName;
+    public Font(String fileName) {
+        this.fileName = fileName;
+        displayName = cleanUpFileNameForDisplay(fileName);
+    }
+
+    private String cleanUpFileNameForDisplay(String fileName) {
+        fileName = fileName.replace("-", " ");
+        fileName = fileName.replace(".ttf", "");
+        fileName = fileName.replace(".otf", "");
+        return fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
     public static List<Font> listAssetFonts(Context context) {
         AssetManager assetManager = context.getAssets();
         String[] fontNames;
@@ -26,33 +49,5 @@ class Font {
         }
 
         return fonts;
-    }
-
-    private String fileName;
-    private String displayName;
-
-    public Font(String fileName) {
-        this.fileName = fileName;
-        displayName = cleanUpFileName(fileName);
-    }
-
-    private String cleanUpFileName(String fileName) {
-        fileName = fileName.replace("-", " ");
-        fileName = fileName.replace(".ttf", "");
-        fileName = fileName.replace(".otf", "");
-        return fileName;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    @Override
-    public String toString() {
-        return displayName;
     }
 }
