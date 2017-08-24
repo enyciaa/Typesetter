@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,6 +31,7 @@ public class TypesetterActivity extends AppCompatActivity {
 
   private static final String TAG = "TypesetterActivity";
   private static final String DEFAULT_TEXT_SIZE = "24";
+  private static final String DEFAULT_LETTER_SPACING = "0.00";
 
   private List<Font> fonts;
   private ActivityMainBinding binding;
@@ -41,6 +41,7 @@ public class TypesetterActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
     binding.fontSizeEditText.setText(DEFAULT_TEXT_SIZE);
+    binding.letterSpacingEditText.setText(DEFAULT_LETTER_SPACING);
 
     fonts = Font.listAssetFonts(this);
 
@@ -96,19 +97,7 @@ public class TypesetterActivity extends AppCompatActivity {
   }
 
   private void initializeEditTextValues() {
-    initializeLetterSpacing();
     initializeLineSpacing();
-  }
-
-  private void initializeLetterSpacing() {
-    binding.letterSpacingTextInputLayout.setEnabled(true);
-    binding.letterSpacingEditText.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
-    float letterSpacing = binding.fillerTextView.getLetterSpacing();
-    if (letterSpacing == 0) {
-      binding.letterSpacingEditText.setText("0.00");
-    } else {
-      binding.letterSpacingEditText.setText(Utils.formatFloatToDisplay(letterSpacing));
-    }
   }
 
   private void initializeLineSpacing() {
@@ -123,16 +112,8 @@ public class TypesetterActivity extends AppCompatActivity {
   }
 
   private void applyLetterSpacing() {
-    String letterSpacing = binding.letterSpacingEditText.getText().toString();
-    try {
-      float letterEms = Float.parseFloat(letterSpacing);
-      binding.fillerTextView.setLetterSpacing(letterEms);
-//      binding.letterSpacingTextInputLayout.setErrorEnabled(false);
-    } catch (NumberFormatException e) {
-      Log.e(TAG, "Unable to format letter spacing");
-//      binding.letterSpacingTextInputLayout.setErrorEnabled(true);
-//      binding.letterSpacingTextInputLayout.setError(getString(R.string.nah));
-    }
+    float letterSpacing = Float.parseFloat(binding.letterSpacingEditText.getText().toString());
+    binding.fillerTextView.setLetterSpacing(letterSpacing);
   }
 
   private void applyLineSpacing() {
