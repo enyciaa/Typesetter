@@ -6,14 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 public class Utils {
-
-  public static boolean IS_LOLLIPOP_AND_ABOVE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
 
   public static void hideKeyboard(@NonNull Activity activity) {
     View view = activity.getCurrentFocus();

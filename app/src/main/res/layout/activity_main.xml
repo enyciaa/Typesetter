@@ -89,8 +89,7 @@
                         android:layout_height="match_parent"
                         android:hint="@string/letter_spacing"
                         android:inputType="numberSigned|numberDecimal"
-                        android:textColor="#008ECC"
-                        android:textSize="24sp"/>
+                        android:textColor="#008ECC" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout

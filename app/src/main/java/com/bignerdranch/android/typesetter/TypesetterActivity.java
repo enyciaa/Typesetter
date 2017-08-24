@@ -6,11 +6,9 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -33,7 +31,7 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 public class TypesetterActivity extends AppCompatActivity {
 
   private static final String TAG = "TypesetterActivity";
-  private static final int DEFAULT_TEXT_SIZE = 24;
+  private static final String DEFAULT_TEXT_SIZE = "24";
 
   private List<Font> fonts;
   private ActivityMainBinding binding;
@@ -42,11 +40,7 @@ public class TypesetterActivity extends AppCompatActivity {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-    if (savedInstanceState == null) {
-      // This will set the text size to (DEFAULT_TEXT_SIZE)sp
-      binding.fillerTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, DEFAULT_TEXT_SIZE);
-    }
+    binding.fontSizeEditText.setText(DEFAULT_TEXT_SIZE);
 
     fonts = Font.listAssetFonts(this);
 
@@ -87,7 +81,7 @@ public class TypesetterActivity extends AppCompatActivity {
       outputStream.close();
     } catch (IOException e) {
       Log.e(TAG, "Failed to save screenshot");
-      Snackbar.make(binding.coord, R.string.failed_to_save_screenshot, Snackbar.LENGTH_SHORT).show();
+      Snackbar.make(binding.containerLayout, R.string.failed_to_save_screenshot, Snackbar.LENGTH_SHORT).show();
       return;
     }
 
@@ -102,15 +96,8 @@ public class TypesetterActivity extends AppCompatActivity {
   }
 
   private void initializeEditTextValues() {
-    initializeTextSize();
     initializeLetterSpacing();
     initializeLineSpacing();
-  }
-
-  private void initializeTextSize() {
-    float textSize = binding.fillerTextView.getTextSize();
-    textSize = textSize / getResources().getDisplayMetrics().scaledDensity;
-    binding.fontSizeEditText.setText(Utils.formatFloatToDisplay(textSize));
   }
 
   private void initializeLetterSpacing() {
@@ -131,9 +118,8 @@ public class TypesetterActivity extends AppCompatActivity {
   }
 
   private void applyTextSize() {
-    String size = binding.fontSizeEditText.getText().toString();
-    float sizeSp = Float.parseFloat(size);
-    binding.fillerTextView.setTextSize(sizeSp);
+    float size = Float.parseFloat(binding.fontSizeEditText.getText().toString());
+    binding.fillerTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
   }
 
   private void applyLetterSpacing() {
